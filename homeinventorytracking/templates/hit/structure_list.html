@@ -1,0 +1,86 @@
+{% extends "hit/base.html" %}
+{% block breadcrumbs %}
+    {{ block.super }} » <a href="{% url 'hit:buildings' %}">Buildings</a>
+    {% if structure_type == 'A' %}
+        » <a href="{% url 'hit:apartments' view.kwargs.pk %}">Apartments</a>
+    {% endif %}
+    {% if structure_type == 'R' %}
+        » <a href="{% url 'hit:apartments' view.kwargs.building %}">Apartments</a>
+        » <a href="{% url 'hit:rooms' view.kwargs.building view.kwargs.pk %}">Rooms</a>
+    {% endif %}
+{% endblock %}
+{% load structure_filters %}
+{% block content %}
+    <!-- title -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">{{ title }}</h1>
+        <a href="{{ action_url }}new">
+            <button type="button" class="btn btn-sm btn-primary">
+                <i class="fas fa-plus-circle"></i>
+            </button>
+        </a>
+    </div>
+
+    {% if structure_list %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Parent</th>
+                <th scope="col">Object Value</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for s in structure_list %}
+                <tr>
+                    <th scope="row">{{ s.id }}</th>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.type | structure_type }}</td>
+                    <td>{% if s.parent_id %}{{ s.parent.name }}, {{ s.parent.type | structure_type }}{% endif %}</td>
+                    <td>{{ s.object_value }}</td>
+                    <td>
+                        {% if s.type == 'B' %}
+                            <a href="{% url 'hit:apartments' s.id %}" class="btn btn-sm">
+                                <i class="fas fa-info"></i>
+                            </a>
+                        {% elif s.type == 'A' %}
+                            <a href="{% url 'hit:rooms' s.parent.id s.id %}" class="btn btn-sm">
+                                <i class="fas fa-info"></i>
+                            </a>
+                        {% elif s.type == 'R' %}
+                            <a href="{% url 'hit:objects' s.parent.parent.id s.parent.id s.id %}" class="btn btn-sm">
+                                <i class="fas fa-info"></i>
+                            </a>
+                        {% endif %}
+                        <a href="{{ action_url }}{{ s.id }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url "hit:delete_structure" s.id %}" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data</p>
+    {% endif %}
+    <!-- table -->
+
+
+    {#    <!-- pagination -->#}
+    {#    <nav aria-label="Page navigation example">#}
+    {#        <ul class="pagination">#}
+    {#            <li class="page-item"><a class="page-link" href="#">Previous</a></li>#}
+    {#            <li class="page-item"><a class="page-link" href="#">1</a></li>#}
+    {#            <li class="page-item"><a class="page-link" href="#">2</a></li>#}
+    {#            <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+    {#            <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+    {#        </ul>#}
+    {#    </nav>#}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "hit/base.html" %}
+{% load structure_filters %}
+{% block content %}
+    <!-- title -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">{{ title }}</h1>
+    </div>
+
+    {{ form.non_field_errors }}
+    <!-- One Column Form -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        {% if object.id %}
+            <div class="form-group">
+                <label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
+                {{ form.type }}
+                {{ form.type.errors }}
+            </div>
+        {% else %}
+            <input type="hidden" name="{{ form.type.name }}" value="{{ current_structure_type }}">
+        {% endif %}
+        <div class="form-group">
+            <label for="{{ form.parent.id_for_label }}">{{ form.parent.label }}</label>
+            {{ form.parent }}
+            {{ form.parent.errors }}
+        </div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
