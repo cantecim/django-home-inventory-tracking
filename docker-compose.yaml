@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    image: metglobal-hit
+    build:
+      context: .
+    depends_on:
+      - db
+    env_file: docker-compose.env
+    ports:
+      - "5500:8000"
+    restart: on-failure
+  db:
+    image: postgres:10
+    volumes:
+      - "./data/postgresql:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_USER=metglobal
+      - POSTGRES_PASSWORD=metglobal
+      - POSTGRES_DB=metglobal_hit
