@@ -76,8 +76,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'metglobal_hit',
-        'USER': 'metglobal',
-        'PASSWORD': '123123'
+        'USER': os.environ.get('DATABASE_USER', 'metglobal'),
+        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', '123123')
     }
 }
 
