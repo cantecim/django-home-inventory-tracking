@@ -3,7 +3,7 @@
 ## How to run with Docker
 * cd into project's root folder
 * hit "docker-compose up"
-* wait a little bit, don't worry it might output some errors about database connections when booting up
+* wait a little bit, don't worry it might output some errors about database connections when booting up. It will start to serve eventually
 * Browse http://127.0.0.1:5500
 
 ## How to run on local environment
