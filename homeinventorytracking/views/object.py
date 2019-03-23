@@ -52,6 +52,7 @@ class ObjectUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.page_title
+        context['is_update'] = True
         context['form'].fields['structure'].queryset = context['form'].fields['structure'].queryset.filter(
             parent_id=self.kwargs['apartment'])
         return context

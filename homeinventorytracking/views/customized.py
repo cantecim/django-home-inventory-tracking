@@ -56,10 +56,13 @@ class CustomizedCreateView(generic.edit.CreateView):
 
 class CustomizedUpdateView(generic.edit.UpdateView):
     page_title = 'Title Not Set'
+    current_structure_type = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.page_title
+        context['is_update'] = True
+        context['current_structure_type'] = self.current_structure_type
         context['form'].fields['type'].widget.attrs.update({
             'readonly': True
         })

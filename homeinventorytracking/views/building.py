@@ -31,6 +31,7 @@ class BuildingUpdateView(CustomizedUpdateView):
     template_name = 'hit/structure_detail.html'
     page_title = 'Building'
     form_class = StructureForm
+    current_structure_type = StructureTypeChoice.Building.value
 
     def get_success_url(self):
         return reverse_lazy('hit:building', kwargs=self.kwargs)

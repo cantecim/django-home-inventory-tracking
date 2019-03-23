@@ -36,6 +36,7 @@ class RoomUpdateView(CustomizedUpdateView):
     template_name = 'hit/structure_detail.html'
     page_title = 'Room'
     form_class = StructureForm
+    current_structure_type = StructureTypeChoice.Room.value
 
     def get_success_url(self):
         return reverse_lazy('hit:room', kwargs=self.kwargs)

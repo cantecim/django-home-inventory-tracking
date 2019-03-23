@@ -1,4 +1,16 @@
 {% extends "hit/base.html" %}
+{% block breadcrumbs %}
+    {{ block.super }}
+     » <a href="{% url 'hit:buildings' %}">Buildings</a>
+     » <a href="{% url 'hit:apartments' view.kwargs.building %}">Apartments</a>
+     » <a href="{% url 'hit:rooms' view.kwargs.building view.kwargs.apartment %}">Rooms</a>
+     » <a href="{% url 'hit:objects' view.kwargs.building view.kwargs.apartment view.kwargs.pk %}">Objects</a>
+    {% if not is_update %}
+    » <a href="{{ request.build_absolute_uri }}">New</a>
+    {% else %}
+    » <a href="{{ request.build_absolute_uri }}">Edit</a>
+    {% endif %}
+{% endblock %}
 {% load structure_filters %}
 {% block content %}
     <!-- title -->
